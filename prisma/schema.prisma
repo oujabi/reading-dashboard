@@ -6,3 +6,57 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// === MODELES POUR READING DASHBOARD ===
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  books     Book[]
+  sessions  ReadingSession[]
+}
+
+model Book {
+  id          String         @id @default(cuid())
+  title       String
+  author      String
+  description String?
+  pageCount   Int
+  isbn        String?        @unique
+  coverImage  String?
+  status      BookStatus     @default(TO_READ)
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  sessions    ReadingSession[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([userId])
+}
+
+model ReadingSession {
+  id        String   @id @default(cuid())
+  bookId    String
+  book      Book     @relation(fields: [bookId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  startPage Int
+  endPage   Int
+  duration  Int?     // en minutes
+  notes     String?
+  date      DateTime @default(now())
+
+  @@unique([userId, bookId, date])
+  @@index([userId])
+  @@index([bookId])
+}
+
+enum BookStatus {
+  TO_READ
+  READING
+  FINISHED
+  ABANDONED
+}
