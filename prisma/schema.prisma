@@ -1,0 +1,28 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum BookStatus {
+  WISHLIST
+  READ
+  READING
+}
+
+// === MODELES POUR READING DASHBOARD ===
+model Books {
+  id String @id @default(uuid())
+  title String @unique
+  author String
+  genre String
+  pages Int
+  isbn String
+  publicationAt DateTime
+  startedAt DateTime
+  endedAt DateTime
+  readingStatus BookStatus @default(WISHLIST)
+}
