@@ -15,14 +15,14 @@ enum BookStatus {
 
 // === MODELES POUR READING DASHBOARD ===
 model Books {
-  id String @id @onCreate(uuid())
+  id String @id @default(uuid())
   title String @unique
   author String
   genre String
-  publicationDate Date
   pages Int
   isbn String
-  startedDate Date
-  endedDate Date
+  publicationAt DateTime
+  startedAt DateTime
+  endedAt DateTime
   readingStatus BookStatus @default(WISHLIST)
 }
