@@ -1,11 +1,12 @@
 import Form from "next/form";
+import {createBook} from "@/src/app/add/book/actions";
 
 export default function FormBook() {
     return (
         <>
             <div className="flex flex-col h-full w-full rounded-lg bg-sky-100">
                 <h1 className="text-xl pl-1 ">New Books</h1>
-                <Form action={"/add/book"} className={"flex flex-wrap border w-full h-full p-5 rounded-lg"}>
+                <Form action={createBook} className={"flex flex-wrap border w-full h-full p-5 rounded-lg"}>
                     <div className="flex flex-col">
                         <label htmlFor="title">Title</label>
                         <input className="border p-2 w-50 h-6 rounded-md mr-1" type="text" name="title" placeholder={"The witcher"} />
@@ -41,6 +42,8 @@ export default function FormBook() {
                         <input className="border p-2 w-50 h-6 rounded-md mr-1" type="date" name="endedAt" />
                     </div>
 
+                    <input type="query"/>
+                    <button type={"submit"}>Submit</button>
                 </Form>
             </div>
         </>
